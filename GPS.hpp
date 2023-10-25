@@ -29,7 +29,6 @@ class GPS_DD
   bool operator==(GPS_DD& another);
   
 #ifndef _MEMORY_LAYOUT_
-  void foo(void) { std::cout << "GPS_DD\n"; }
   Json::Value nv_dump2JSON();
   virtual Json::Value dump2JSON();
 #endif /* _MEMORY_LAYOUT_ */

@@ -8,11 +8,22 @@ CC 	= g++ -std=c++14
 CFLAGS 	= -g -I/opt/homebrew/include
 LDFLAGS = -L/opt/homebrew/lib -ljsoncpp -lmicrohttpd -ljsonrpccpp-common -ljsonrpccpp-server -lcurl -ljsonrpccpp-client
 
+CLANG_ROOT = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
+
+# CLINC = -I$(CLANG_ROOT)/usr/include/c++/v1 -D_MEMORY_LAYOUT_
+CLINC = -D_MEMORY_LAYOUT_
+
 # rules.
-all: 	test_ThingPerson test_Labeled_GPS
+all: 	test_ThingPerson test_Labeled_GPS ml_Labeled_GPS.txt ml_GPS_DD.txt
 
 #
 #
+
+ml_Labeled_GPS.txt:
+	g++ -cc1 -std=c++14 -fdump-record-layouts $(CLINC) test_ML_Labeled_GPS.cpp > ml_Labeled_GPS.txt
+
+ml_GPS_DD.txt:
+	g++ -cc1 -std=c++14 -fdump-record-layouts $(CLINC) test_ML_GPS_DD.cpp > ml_GPS_DD.txt
 
 Record.o:	Record.cpp Record.h
 	$(CC) -c $(CFLAGS) Record.cpp
@@ -45,6 +56,6 @@ test_Labeled_GPS:	GPS.o Labeled_GPS.o test_Labeled_GPS.o
 	g++ -std=c++14 test_Labeled_GPS.o GPS.o Labeled_GPS.o -o test_Labeled_GPS $(LDFLAGS)
 
 clean:
-	rm -f *.o *~ core test_ThingPerson test_Labeled_GPS
+	rm -f *.o *~ core test_ThingPerson test_Labeled_GPS ml_Labeled_GPS.txt ml_GPS_DD.txt
 
 

@@ -8,8 +8,8 @@ Labeled_GPS::Labeled_GPS
 }
 
 Labeled_GPS::Labeled_GPS
-(double arg_latitude, double arg_longitude, std::string arg_label):
-  GPS_DD(arg_latitude, arg_longitude)
+(double arg_latitude, double arg_longitude, std::string arg_label)
+  : GPS_DD(arg_latitude, arg_longitude)
 {
   this->label = arg_label;
 }
@@ -28,6 +28,8 @@ Labeled_GPS::dump2JSON
 ()
 {
   GPS_DD parent_copy = (*this);
+  // parent_copy is a GPS_DD object without the Labeled_GPS derived portion
+  
   Json::Value result = parent_copy.dump2JSON();
   
   if (this->label != "default")
