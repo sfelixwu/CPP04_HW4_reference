@@ -18,9 +18,10 @@ class GPS_DD
 {
  private:
  protected:
+ public:
   double latitude;
   double longitude;
- public:
+
   GPS_DD();
   GPS_DD(double, double);
   double getLatitude();
@@ -31,6 +32,7 @@ class GPS_DD
 #ifndef _MEMORY_LAYOUT_
   void foo(void) { std::cout << "GPS_DD\n"; }
   Json::Value nv_dump2JSON();
+  // Json::Value dump2JSON();
   virtual Json::Value dump2JSON();
 #endif /* _MEMORY_LAYOUT_ */
 };

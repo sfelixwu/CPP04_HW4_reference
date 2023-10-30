@@ -40,17 +40,23 @@
 	     // Object Memory Layout
 	     // JSONRPC and Proxy Objects
 
+
 // Questions from the 10/23/2023 lecture
 // (1) How to define a Single Inheritance relationship? [public, protected, private, virtual]
 // (2) How to move "up and down" from a Single Inheritance Hierarchy?
+// ==> cast up via reference (casting is done by the compiler, NOT run-time !!!)
+// ==> cast down via reference if it is Single Inheritance
+// ==> you cannot cast down at all if it is Virtual Inheritance
+
 // (3) How are objects, including those inherited components, allocated in memory?
 // (4) What is a virtual function?
+	     // virtual table pointer
 // (4.5) Or, what is the difference between the object creation time and the object access time?
 // The above questions are pretty much all we need to worry for midterm #3.
 
 #include "GPS.h"
 
-// class Labeled_GPS : virtual GPS_DD
+// class Labeled_GPS : virtual public GPS_DD
 
 class Labeled_GPS : public GPS_DD
 {
@@ -73,6 +79,7 @@ class Labeled_GPS : public GPS_DD
   void foo(void) { std::cout << "Label_GPS\n"; }
   Json::Value nv_dump2JSON();
   virtual Json::Value dump2JSON();
+  // Json::Value dump2JSON();
 #endif /* _MEMORY_LAYOUT_ */
 };
 

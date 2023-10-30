@@ -27,10 +27,12 @@ Json::Value
 Labeled_GPS::dump2JSON
 ()
 {
-  GPS_DD parent_copy = (*this);
+  // GPS_DD parent_copy = (*this);
   // parent_copy is a GPS_DD object without the Labeled_GPS derived portion
-  
-  Json::Value result = parent_copy.dump2JSON();
+  // Json::Value result = parent_copy.dump2JSON();
+
+  // another option
+  Json::Value result = this->GPS_DD::dump2JSON();
   
   if (this->label != "default")
     {

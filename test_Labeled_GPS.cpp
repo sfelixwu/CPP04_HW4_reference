@@ -13,32 +13,81 @@ main(int argc, char *argv[])
   Labeled_GPS gps_IKEA_Sacramento { 38.58681641563053, -121.55296296578501, "IKEA, West Sacramento" };
 
   // calling different foo's
+  // gps_TLC_UCDavis->foo();
   gps_TLC_UCDavis.foo();
   ((GPS_DD&) gps_TLC_UCDavis).foo();
+  // there are multiple reasons for casting up, but if we only want to invoke the function
+  gps_TLC_UCDavis.GPS_DD::foo();
+
+  std::cout << std::endl;
+  std::cout << "before\n";
+  std::cout << "label     content = " <<   gps_TLC_UCDavis.label      << std::endl;
+  std::cout << "label     address = " << &(gps_TLC_UCDavis.label)     << std::endl;
+  std::cout << "longitude address = " << &(gps_TLC_UCDavis.longitude) << std::endl;
+  std::cout << "latitude  address = " << &(gps_TLC_UCDavis.latitude)  << std::endl;
 
   // move up and down with reference
-  GPS_DD& gps_ref = (GPS_DD&) gps_TLC_UCDavis;
-  Labeled_GPS& labeled_ref_1 = (Labeled_GPS&) gps_ref;
-
+  std::cout << std::endl;
   std::cout << gps_TLC_UCDavis.label << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "before type casting to the base class using reference\n";
+  std::cout << "object    address = " <<   &gps_TLC_UCDavis       << std::endl;
+  GPS_DD& gps_ref = (GPS_DD&) gps_TLC_UCDavis;
+
+  std::cout << std::endl;  
+  std::cout << "after type casting to the base class using reference\n";
+  // BTW, below, you can only use &gps_ref, NOT gps_ref.
+  std::cout << "object    address = " <<   &gps_ref      << std::endl;
+  Labeled_GPS& labeled_ref_1 = (Labeled_GPS&) gps_ref;
+  std::cout << std::endl;
+  std::cout << labeled_ref_1.label << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "after up and down via reference\n";
+  std::cout << "label     content = " <<   labeled_ref_1.label      << std::endl;
+  std::cout << "label     address = " << &(labeled_ref_1.label)     << std::endl;
+  std::cout << "longitude address = " << &(labeled_ref_1.longitude) << std::endl;
+  std::cout << "latitude  address = " << &(labeled_ref_1.latitude)  << std::endl;
+
+  // Thing -> IOT_Thing
+  // Thing -> Food
+
   // move up with copy and down with reference
   GPS_DD gps_copy = (GPS_DD) gps_TLC_UCDavis;
+  std::cout << std::endl;
+  std::cout << "after type casting to the base class using copy\n";
+  std::cout << "object    address = " <<   &gps_copy      << std::endl;
   // error => Labeled_GPS labeled_copy_1 = (Labeled_GPS) gps_copy;
   Labeled_GPS labeled_copy_1 = (Labeled_GPS&) gps_copy;
-  std::cout << labeled_copy_1.label << std::endl;
+
+  std::cout << std::endl;
+  std::cout << "after up via copy and down via reference\n";
+  std::cout << "label     content = " <<   labeled_copy_1.label      << std::endl;
+  std::cout << "label     address = " << &(labeled_copy_1.label)     << std::endl;
+  std::cout << "longitude address = " << &(labeled_copy_1.longitude) << std::endl;
+  std::cout << "latitude  address = " << &(labeled_copy_1.latitude)  << std::endl;
 
   GPS_DD gps_Test { 38.672215864622636, -121.72280111121437 };
   Labeled_GPS& labeled_ref_2 = (Labeled_GPS&) gps_Test;
 
+  // ==> starting here 10/30/2023
+  
   Json::Value x;
   x = gps_IKEA_Sacramento.dump2JSON();
-  std::cout << x.toStyledString() << std::endl;
+  std::cout << x.toStyledString() << std::endl; // three lines
 
   GPS_DD * gps_ptr;
   gps_ptr = ((GPS_DD *) (&gps_IKEA_Sacramento));
-  x = gps_ptr->dump2JSON();
-  std::cout << x.toStyledString() << std::endl;
+  // x = gps_ptr->dump2JSON();
+  x = (*gps_ptr).dump2JSON();
+  std::cout << "pointer: \n" << x.toStyledString() << std::endl; // three lines
 
+  GPS_DD gps_copy_2;
+  gps_copy_2 = gps_IKEA_Sacramento;
+  x = gps_copy_2.dump2JSON();
+  std::cout << "copy: \n" << x.toStyledString() << std::endl; // two lines
+  
   x = gps_ptr->nv_dump2JSON();
   std::cout << x.toStyledString() << std::endl;
 
@@ -46,7 +95,7 @@ main(int argc, char *argv[])
   std::cout << x.toStyledString() << std::endl;
 
   x = ((GPS_DD&) gps_IKEA_Sacramento).dump2JSON();
-  std::cout << x.toStyledString() << std::endl;
+  std::cout << "reference: \n" << x.toStyledString() << std::endl;
 
   return 0;
 }

@@ -1,0 +1,17 @@
+
+*** Dumping AST Record Layout
+         0 | class GPS_DD
+         0 |   double latitude
+         8 |   double longitude
+           | [sizeof=16, dsize=16, align=8,
+           |  nvsize=16, nvalign=8]
+
+*** Dumping AST Record Layout
+         0 | class Labeled_GPS
+         0 |   (Labeled_GPS vtable pointer)
+         8 |   double label
+        16 |   class GPS_DD (virtual base)
+        16 |     double latitude
+        24 |     double longitude
+           | [sizeof=32, dsize=32, align=8,
+           |  nvsize=16, nvalign=8]
