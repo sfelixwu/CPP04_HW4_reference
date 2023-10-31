@@ -51,6 +51,12 @@
 // (3) How are objects, including those inherited components, allocated in memory?
 // (4) What is a virtual function?
 	     // virtual table pointer
+	     // TWO conditions to apply the concept of virtual functions to our program --
+	     // (1) we need to up-cast a whole bunch of objects to their base or ancester.
+	     // convert all the Labeled_GPS objects to GPS_DD objects
+	     // convert all the Google_Map_GPS objects also to GPS_DD objects
+	     // --> all objects are not GPS_DD objects
+
 // (4.5) Or, what is the difference between the object creation time and the object access time?
 // The above questions are pretty much all we need to worry for midterm #3.
 
